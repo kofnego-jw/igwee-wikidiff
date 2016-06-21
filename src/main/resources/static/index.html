@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wikipedia Revision Difference Webapp</title>
+    <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="css/myapp.css" rel="stylesheet" />
+</head>
+<body>
+
+<body ng-app="myApp">
+<div id="main">
+    <div id="top">
+        <div class="row">
+            <div class="col-lg-1 col-md-1 col-sm-1">
+                <a href="http://oesterreichische-geschichte.at" target="_blank">
+                    <img src="images/logo.png" alt="Logo der Kommission für Neuere Geschichte Österreichs" />
+                </a>
+            </div>
+            <div class="col-lg-10 col-md-10 col-sm-10">
+                <h1>IGWEE Wiki Revision Web-Application</h1>
+            </div>
+            <div class="col-lg-1 col-md-1 col-sm-1">
+                <a href="index.html">
+                    <img src="images/uni-logo.png" alt="University Innsbruck" />
+                </a>
+            </div>
+        </div>
+    </div>
+    <div id="loading" ng-controller="loadingController">
+        <div ng-show="loading" id="loadingDiv">
+            <p>Bitte warten...</p>
+        </div>
+    </div>
+    <div id="middle">
+        <div id="menu">
+            <nav>
+                <ul class="nav nav-tabs nav-justified">
+                    <li ui-sref-active="active"><a ui-sref="start">Home</a></li>
+                    <li ui-sref-active="active"><a ui-sref="upload">Revision File Upload</a></li>
+                    <li ui-sref-active="active"><a ui-sref="view">View Revisions</a></li>
+                    <li ui-sref-active="active"><a ui-sref="diff">View Diffs</a></li>
+                    <li ui-sref-active="active"><a ui-sref="user">Revisions by User</a></li>
+                    <li ui-sref-active="active"><a ui-sref="search">Search</a></li>
+                    <li ui-sref-active="active"><a ui-sref="impressum">Impressum</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div id="view">
+            <div ui-view></div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<!-- Scripts -->
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="node_modules/angular-file-saver/node_modules/FileSaver.js/FileSaver.min.js"></script>
+<script src="node_modules/angular-file-saver/node_modules/Blob.js/Blob.js"></script>
+<script src="node_modules/angular/angular.min.js"></script>
+<script src="node_modules/angular-sanitize/angular-sanitize.min.js"></script>
+<script src="node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="node_modules/ng-file-upload/dist/ng-file-upload-shim.min.js"></script>
+<script src="node_modules/ng-file-upload/dist/ng-file-upload.min.js"></script>
+<script src="node_modules/angular-file-saver/dist/angular-file-saver.min.js"></script>
+<script src="js/myapp.js"></script>
+
+</body>
+</html>

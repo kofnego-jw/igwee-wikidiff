@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="col-lg-12" ng-controller="userRevisionController as userRevCtrl">
+        <div class="row">
+            <h3 class="text-center">Revision By User
+                <button ng-click="userRevCtrl.toggleOriginal()">show/hide Original</button>
+                <button ng-click="userRevCtrl.toggleDiff()">show/hide Diff</button></h3>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-2">
+                <div>
+                    <form>
+                        <label>
+                            Filter:
+                            <input class="form-control" type="text" ng-model="filterTerm" />
+                        </label>
+                    </form>
+                </div>
+                <div class="scrollable">
+                    <table class="table col-lg-12">
+                        <tbody>
+                        <tr ng-repeat="contributor in contributorList | filter:filterTerm">
+                            <td><a id="a{{contributor.id}}"></a>
+                                <a ng-click="userRevCtrl.setContributorId(contributor.id)">{{contributor.username}} ({{contributor.id}})</a> <br/>
+                                Number of revisions: {{contributor.numberOfRevisions}}
+                                since: {{contributor.firstRevisionTimestamp}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-lg-10 scrollable">
+                <div ng-bind-html="contentHtml"></div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>

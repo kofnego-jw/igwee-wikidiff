@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><ViewSetting>
+  <indexName>basic</indexName>
+  <decoratorSettings>
+    <DecoratorSetting>
+      <fieldname>author</fieldname>
+      <readableName>Autor/in</readableName>
+      <readableNames class="linked-hash-map"/>
+      <description>Autor/innen/name/n</description>
+      <descriptions class="linked-hash-map"/>
+      <partOfAbstract>true</partOfAbstract>
+    </DecoratorSetting>
+    <DecoratorSetting>
+      <fieldname>title</fieldname>
+      <readableName>Titel</readableName>
+      <readableNames class="linked-hash-map"/>
+      <description>Titel des Werkes</description>
+      <descriptions class="linked-hash-map"/>
+      <partOfAbstract>true</partOfAbstract>
+    </DecoratorSetting>
+    <DecoratorSetting>
+      <fieldname>index</fieldname>
+      <readableName>Schlagworte</readableName>
+      <readableNames class="linked-hash-map"/>
+      <description>Normalisierte Schlagworte</description>
+      <descriptions class="linked-hash-map"/>
+      <partOfAbstract>false</partOfAbstract>
+    </DecoratorSetting>
+    <DecoratorSetting>
+      <fieldname>persName</fieldname>
+      <readableName>Personnennamen</readableName>
+      <readableNames class="linked-hash-map"/>
+      <description>Normalisierte Personennamen</description>
+      <descriptions class="linked-hash-map"/>
+      <partOfAbstract>false</partOfAbstract>
+    </DecoratorSetting>
+    <DecoratorSetting>
+      <fieldname>text</fieldname>
+      <readableName>Volltext</readableName>
+      <readableNames class="linked-hash-map"/>
+      <description>Textausschnitt</description>
+      <descriptions class="linked-hash-map"/>
+      <partOfAbstract>false</partOfAbstract>
+    </DecoratorSetting>
+    <DecoratorSetting>
+      <fieldname>id</fieldname>
+      <readableName>ID</readableName>
+      <readableNames class="linked-hash-map"/>
+      <description>ID</description>
+      <descriptions class="linked-hash-map"/>
+      <partOfAbstract>true</partOfAbstract>
+    </DecoratorSetting>
+    <DecoratorSetting>
+      <fieldname>rs</fieldname>
+      <readableName>Verweise</readableName>
+      <readableNames class="linked-hash-map"/>
+      <description>Normalisierte Verweise</description>
+      <descriptions class="linked-hash-map"/>
+      <partOfAbstract>false</partOfAbstract>
+    </DecoratorSetting>
+    <DecoratorSetting>
+      <fieldname>placeName</fieldname>
+      <readableName>Ortsnamen</readableName>
+      <readableNames class="linked-hash-map"/>
+      <description>Normalisierte Ortsnamen</description>
+      <descriptions class="linked-hash-map"/>
+      <partOfAbstract>false</partOfAbstract>
+    </DecoratorSetting>
+    <DecoratorSetting>
+      <fieldname>title</fieldname>
+      <readableName>Titel</readableName>
+      <readableNames class="linked-hash-map"/>
+      <description>Titel des Dokuments</description>
+      <descriptions class="linked-hash-map"/>
+      <partOfAbstract>false</partOfAbstract>
+    </DecoratorSetting>
+  </decoratorSettings>
+  <facetTranslations/>
+</ViewSetting>

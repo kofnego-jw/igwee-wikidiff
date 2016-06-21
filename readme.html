@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manual for igwee-WikiDiff</title>
+</head>
+<body>
+
+<div>
+    <h1>igwee-WikiDiff user manual</h1>
+
+    <h2>For those in a hurry...</h2>
+    <p>Following these steps and get igwee-wikidiff running.</p>
+    <p><b>Prerequisite:</b></p>
+    <ol>
+        <li>Java 8 SE if you want to run the application, Java 8 JDK and
+            <a href="http://maven.apache.org" target="_blank">Apache Maven</a> if you need
+            to compile the application.
+        </li>
+        <li>A modern browser supporting FileAPI. I assume that IE 11, Firefox 45, Chrome 45 will work.</li>
+    </ol>
+    <p><b>Compiling:</b></p>
+    <ol>
+        <li>Download the source codes from github, it should contains at least a pom.xml file and the src folder.</li>
+        <li>Switch to the folder containing the pom.xml and compile the source code with Maven using "mvn clean
+            package".
+            After the compilation, a file called
+            "igwee-wikidiff-webapp-0.0.1-SNAPSHOT.jar" will be created in the target directory.
+        </li>
+        <li>Alternatively you can also get a precompiled jar file from a friend. (Or write an email to me.)</li>
+        <li>Please note that while compilation maven will try to contact Wikipedia to download revision files. If
+            you wish to skip these tasks, use "mvn clean package -DskipTests" to skip tests.
+        </li>
+    </ol>
+    <p><b>Running:</b></p>
+    <ol>
+        <li>Copy the jar file to a working directory, the directory need to be writable for the user who
+            starts the program. And the port 1414 needs to be free.
+        </li>
+        <li>Start the program in the terminal with "java -jar igwee-wikidiff-webapp-0.0.1-SNAPSHOT.jar".</li>
+        <li>Open a browser and surf to <a href="http://localhost:1414/" target="_blank">http://localhost:1414/</a>
+            and get the thing running.
+        </li>
+        <li>If the port 1414 is not free, but --say-- 12345 is, start the program with
+            "java -jar igwee-wikidiff-webapp-0.0.1-SNAPSHOT.jar --server.port=12345" and surf to
+            "http://localhost:12345/". Please note that if your computer does not have a firewall, this port
+            will be a potential weak point for hackers.
+        </li>
+        <li>Using "Ctrl + c" in terminal to terminate the program.</li>
+    </ol>
+
+    <h2>Main Goal of this app</h2>
+    <p>This app should aid people view and review revisions of Wikipedia Articles and Wikipedia Discussions. It
+        provides the following functionality:</p>
+    <ul>
+        <li>Uploading a Wikipedia Export File or direct download (optional auto ingest) an article from
+            English or German Wikipedia site
+        </li>
+        <li>View each revision</li>
+        <li>Compare two revisions</li>
+        <li>List authors of each revision and view their corrections</li>
+        <li>Fulltext Search within the revision file.</li>
+    </ul>
+
+    <h2>How this program works</h2>
+    <p>The program takes an XML-export file from Semantic Media Wiki, and runs different XSLT Stylesheets
+        to get the data. These data is then provided to the user through a web interface. The following data
+        processing methods are used:</p>
+    <ul>
+        <li>Get a list of revisions and contributors.</li>
+        <li>View a revision (using the Bliki Wiki library)</li>
+        <li>View the differences between revisions (use the Google Diff-Match-Path library)</li>
+        <li>View revisions by user</li>
+        <li>Implementation of Fulltext search. This is experimental for the project.</li>
+    </ul>
+
+    <h2>Known Issues</h2>
+    <p>There are several difficulties with this app. Many of them are due to the fact that this app
+        is developed for academic use on a single computer. Therefore these difficulties will stay. Others
+        are simply bugs :)</p>
+    <ul>
+        <li>You can only review one XML file, the file you uploaded. After a successful upload,
+            the index will be cleared and the old source of the transformation will be replaced with
+            the new one. I.E.: If you upload a new XML, the old one will be erased.
+        </li>
+        <li>There is no log... Well, you could turn it on, although the logs will probably be of
+            less use...
+        </li>
+        <li>Only XML export in the current version (as 2016-06-14) is supported. Future export formats
+            will probably break the application. But this is okay.
+        </li>
+        <li>User coming from an IP (without logging themselves to WikiPedia) is shown as if their usename
+            is [ip:###.###.###.###].
+        </li>
+    </ul>
+
+    <h2>Acknowledgments</h2>
+    <p>This webapp is developed by <a href="http://pepivampir.wordpress.com" target="_blank">joseph wang</a>
+        of the <a href="http://oesterreichische-geschichte.at" target="_blank">Commission for Modern Austrian
+            History</a>.
+        The source code is licensed under BSD-2-Clause license, while the linked libraries
+        are licensed under different free licenses.</p>
+    <p>The following libraries (and many others) are used in this webapp:</p>
+    <ul>
+        <li><a href="http://spring.io" target="_blank">Spring Boot</a> (Apache License 2.0)</li>
+        <li><a href="http://lucene.apache.org" target="_blank">Apache Lucene</a> (Apache License 2.0)</li>
+        <li><a href="http://saxon.sourceforge.net" target="_blank">Saxon XSLT Processor</a> (Mozilla Public License 2.0)
+        </li>
+        <li><a href="https://github.com/FasterXML/jackson" target="_blank">Jackson JSON Library</a> (Apache License 2.0)
+        </li>
+        <li><a href="http://x-stream.github.io/" target="_blank">XStream</a> (Modified BSD License)</li>
+        <li><a href="http://hc.apache.org" target="_blank">Apache HttpComponents</a> (Apache License 2.0)</li>
+        <li><a href="https://bitbucket.org/axelclk/info.bliki.wiki/overview" target="_blank">Bliki Converter</a>
+            (Eclipse Public License)
+        </li>
+        <li><a href="https://bitbucket.org/cowwoc/google-diff-match-patch/wiki/Home" target="_blank">Google
+            Diff-Match-Patch</a></li>
+        <li><a href="https://jquery.com/" target="_blank">JQuery</a> (MIT License)</li>
+        <li><a href="http://angularjs.org" target="_blank">Angular JS</a> (MIT License)</li>
+        <li><a href="https://github.com/angular-ui/ui-router" target="_blank">Angular UI Router</a> (MIT License)</li>
+        <li><a href="https://github.com/alferov/angular-file-saver" target="_blank">Angular File Saver</a> (MIT License)
+        </li>
+        <li><a href="https://github.com/danialfarid/ng-file-upload" target="_blank">ng-file-upload</a> (MIT License)
+        </li>
+        <li><a href="http://getbootstrap.com" target="_blank">Twitter Bootstrap</a> (MIT License)</li>
+        <li>Kofnego-Editing-Karaf, a collection of useful abstractions. The necessary sourcecodes are included in the
+            project now. If this project should ever be released, it will be released under BSD-2-Clause license.
+        </li>
+        <li>at.ac.uibk.fiba.metadata.httpclient, an abstraction for HTTP calls. The source codes are included in the
+            project. This project, too, will -- so God will -- be released under BSD-2-Clause license.
+        </li>
+    </ul>
+    <p>The following tools are used for the development</p>
+    <ul>
+        <li><a href="http://maven.apache.org" target="_blank">Apache Maven</a></li>
+        <li><a href="https://www.jetbrains.com/idea/" target="_blank">Intellij IDEA</a></li>
+        <li><a href="https://nodejs.org/en/" target="_blank">Node.js</a></li>
+        <li><a href="https://www.google.com/chrome/" target="_blank">Google Chrome</a></li>
+    </ul>
+    <p>If you should have any comments, please write an email to pepivampir@gmail.com.</p>
+    <hr/>
+
+    <h4>PS</h4>
+    <p>Why is this file called readme? I don't think I am readable, except for psychics perhaps. And if I refer
+        to this document with "me", wouldn't this be a ticket to psychiatry? Why is this document not called
+        "readthis"?</p>
+</div>
+
+</body>
+</html>

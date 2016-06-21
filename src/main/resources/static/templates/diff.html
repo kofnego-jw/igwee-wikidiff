@@ -1,0 +1,89 @@
+<div class="row" ng-controller="diffController as diffCtrl">
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1">
+                <h3 class="text-center">Revision Differences</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-2">
+                <div>
+                    <form>
+                        <label>
+                            Filter:
+                            <input class="form-control" type="text" ng-model="filterTerm" />
+                        </label>
+                    </form>
+                </div>
+                <div class="scrollable col-lg-6">
+                    <table class="table">
+                        <tbody>
+                        <tr ng-repeat="rev in revisionList|filter:filterTerm">
+                            <td>
+                                <a id="a{{rev.id}}"></a>
+                                <button ng-click="diffCtrl.setRevisionId('1', rev.id)">{{rev.id}}</button>
+                                <br/>
+                                <span title="{{rev.timestamp}}">{{ rev.timestamp | limitTo:10 }}</span> <br/>
+                                by {{rev.contributor.username}} <br/>
+                                <span title="{{rev.comment}}">Comment</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="scrollable col-lg-6">
+                    <table class="table">
+                        <tbody>
+                        <tr ng-repeat="rev in revisionList|filter:filterTerm">
+                            <td>
+                                <a id="b{{rev.id}}"></a>
+                                <button ng-click="diffCtrl.setRevisionId('2', rev.id)">{{rev.id}}</button>
+                                <br/>
+                                <span title="{{rev.timestamp}}">{{ rev.timestamp | limitTo:10 }}</span> <br/>
+                                by {{rev.contributor.username}} <br/>
+                                <span title="{{rev.comment}}">Comment</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <div class="col-lg-10 scrollable">
+                <p>Please select two revisions from the first and second column, and then click on the GO button.</p>
+                <p>The DIFF window shows
+                    <ins>INSERTIONS</ins>
+                    and
+                    <del>DELETIONS</del>
+                    as shown here.
+                </p>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-lg-4">
+                            <span style="padding-left: 30px" ng-show="diffCtrl.hasPrevRevision()">
+                                <button ng-click="diffCtrl.diffWithPrev()">Compare {{revId1}} with previous Revision</button>
+                            </span>
+                        </div>
+                        <div class="col-lg-4">Compare {{revId1}} with {{revId2}}:
+                            <button ng-click="diffCtrl.doDiff()">GO</button></div>
+                        <div class="col-lg-4"><span style="padding-left: 30px" ng-show="diffCtrl.hasNextRevision()"><button ng-click="diffCtrl.diffWithNext()">Compare {{revId2}} with next Revision</button></span></div>
+                    </div>
+                </div>
+
+                <div ng-show="diffFW.diff">
+                    <button ng-click="diffCtrl.setShowing('text1')">{{revId1}}</button>
+                    |
+                    <button ng-click="diffCtrl.setShowing('text2')">{{revId2}}</button>
+                    |
+                    <button ng-click="diffCtrl.setShowing('diff')">Diff</button>
+                    <span style="padding-left: 30px"></span>
+                    <button ng-click="diffCtrl.toggleBreakMode()">Change line break mode</button>
+
+                    <div class="row">
+                        <pre ng-bind-html="sourceNow" class="text-area sourceCode" ng-class="breakMode"></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

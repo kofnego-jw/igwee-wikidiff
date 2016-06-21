@@ -1,0 +1,159 @@
+/* CSS */
+
+body {
+    font-size: small;
+}
+
+#main {
+    width: 98vmax;
+    margin: 10px auto;
+    border: 1px solid #000099;
+    padding: 5px;
+    height: 97vh;
+}
+
+#top {
+    text-align: center;
+    height: 10vh;
+}
+
+#top div {
+    height: 10vh;
+}
+
+#top img {
+    height: 10vh;
+}
+
+#middle {
+    clear: both;
+    margin-top: 10px;
+    height: 85vh;
+}
+
+#menu {
+    height: 5%;
+}
+
+#view {
+    height: 95%;
+}
+
+#middle .scrollable {
+    height: 70vh;
+    overflow-y: scroll;
+}
+
+.scrollable div {
+    padding: 1rem;
+}
+
+#loadingDiv {
+    background-color: #000000;
+    color: #ffffff;
+    opacity: 0.8;
+    z-index: 1000;
+    height: 98vmax;
+    position: fixed;
+    width: 98vmax;
+    text-align: center;
+    padding-top: 320px;
+    margin: 0 0 0 -6px;
+}
+
+#diaryViewPort {
+
+}
+
+
+#diaryViewPort .bold{
+    font-weight: bold;
+}
+#diaryViewPort .italic{
+    font-style: italic;;
+}
+#diaryViewPort .subscript{
+    font-size: 50%;
+    vertical-align: bottom;
+}
+#diaryViewPort .superscript{
+    font-size: 70%;
+    vertical-align: top;
+}
+#diaryViewPort .pb{
+    font-size: 50%;
+    vertical-align: top;
+    color: #990000;
+}
+#diaryViewPort .weather{
+    text-align: right;
+    color: #009900;
+}
+#diaryViewPort .letteronly{
+    font-size: smaller;
+}
+#diaryViewPort .letterOfDay{
+    font-size: smaller;
+    width: 80%;
+    margin-left: 20%;
+}
+#diaryViewPort .note{
+    font-size: 70%;
+    vertical-align: top;
+    color: #990000;
+}
+#diaryViewPort .deleted{
+    font-size: 80%;
+    vertical-align: baseline;
+    text-decoration: line-through;
+}
+#diaryViewPort .choice{
+    color: #777700;
+}
+#diaryViewPort .add{
+    color: #007777
+}
+
+.bg-highlight {
+    background-color: #ffff00;
+}
+
+.hitsTable {
+}
+
+.hitsTable td div {
+    margin: 0;
+    padding: 0;
+}
+
+.sourceCode {
+    margin: 0;
+    height: 52vh;
+    overflow: scroll;
+    resize: both;
+    white-space: pre-wrap;
+}
+
+ins {
+    background-color: #ffff00;
+}
+
+del {
+    background-color: #00ffff;
+}
+
+.wspre {
+    white-space: pre;
+}
+
+.wsprewrap {
+    white-space: pre-wrap;
+}
+
+.originalText {
+    display: block;
+}
+
+.diffText {
+    display: block;
+}

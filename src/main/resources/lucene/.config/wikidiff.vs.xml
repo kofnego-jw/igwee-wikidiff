@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><ViewSetting>
+  <indexName>wikidiff</indexName>
+  <decoratorSettings>
+    <DecoratorSetting>
+      <fieldname>text</fieldname>
+      <readableName>text</readableName>
+      <readableNames class="linked-hash-map"/>
+      <description>text</description>
+      <descriptions class="linked-hash-map"/>
+      <partOfAbstract>false</partOfAbstract>
+    </DecoratorSetting>
+    <DecoratorSetting>
+      <fieldname>weather</fieldname>
+      <readableName>Weather line</readableName>
+      <readableNames class="linked-hash-map"/>
+      <description>Zinzendorf&apos;s Weather Line.</description>
+      <descriptions class="linked-hash-map"/>
+      <partOfAbstract>false</partOfAbstract>
+    </DecoratorSetting>
+  </decoratorSettings>
+  <facetTranslations/>
+</ViewSetting>
