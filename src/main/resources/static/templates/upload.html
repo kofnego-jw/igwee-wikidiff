@@ -16,7 +16,7 @@
 
         <hr/>
 
-        <h3 class="text-center">File Download</h3>
+        <h3 class="text-center" style="margin-top: 5em;">File Download</h3>
         <p>You can download the revision file from Wikipedia. Please note that the downloading process will
         contain ALL revisions of a Wikipedia Page and can be of several MByte big.</p>
 
@@ -32,6 +32,34 @@
 
             <button type="submit" ng-click="uploadCtrl.downloadFromWikipedia()">Download from Wikipedia</button>
         </form>
+
+        <hr/>
+
+        <h3 class="text-center" style="margin-top: 5em">Talk and Archives Download -- Experimental</h3>
+        <p>You can download the revision file from Wikipedia. Please note that the downloading process will
+            contain ALL revisions of a Wikipedia Talk-Page and can be of several hundreds of MByte big.</p>
+
+        <form class="col-lg-12">
+
+            <select ng-model="languageCode" ng-options="lc for lc in languageCodes">
+
+            </select>
+
+            <label>
+                Page Title
+                <input ng-model="pageTitle" type="text" placeholder="Enter the talk page title (including 'Talk:' or 'Diskussion:' here" />
+            </label>
+
+            <label>
+                Archive page count
+                <input ng-model="archiveCount" type="text" placeholder="Please enter a number here" />
+            </label>
+
+            <input ng-model="autoIngest" type="checkbox"/> Auto ingest the revision
+
+            <button type="submit" ng-click="uploadCtrl.downloadArchiveFromWikipedia()">Download Talk Archive from Wikipedia</button>
+        </form>
+
 
     </div>
 

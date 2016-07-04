@@ -11,6 +11,7 @@
     <xsl:template match="/">
         <xsl:text>{"revisionList":[</xsl:text>
         <xsl:for-each select="//wiki:page/wiki:revision">
+            <xsl:sort select="wiki:timestamp"/>
             <xsl:text>{</xsl:text>
             <xsl:text>"id":"</xsl:text>
             <xsl:apply-templates select="wiki:id"/>

@@ -36,6 +36,7 @@
     
     <xsl:template name="writeRevisions">
         <xsl:for-each select="//wiki:revision[wiki:contributor/wiki:id=$userid] | //wiki:revision[wiki:contributor/wiki:ip=$userid] ">
+            <xsl:sort select="wiki:timestamp"/>
             <div>
                 <h5>Revision
                     <xsl:value-of select="./wiki:id"/> on 

@@ -6,7 +6,7 @@
       <fieldname>revision</fieldname>
       <mode>SNIPPET_WHEN_FOUND</mode>
       <highlight>true</highlight>
-      <fragmentSize>20</fragmentSize>
+      <fragmentSize>50</fragmentSize>
       <maxFragNumber>50</maxFragNumber>
       <fragmenterName>SIMPLE</fragmenterName>
       <mergeContiguous>true</mergeContiguous>
@@ -15,7 +15,7 @@
       <fieldname>comment</fieldname>
       <mode>ALWAYS</mode>
       <highlight>true</highlight>
-      <fragmentSize>20</fragmentSize>
+      <fragmentSize>50</fragmentSize>
       <maxFragNumber>50</maxFragNumber>
       <fragmenterName>SIMPLE</fragmenterName>
       <mergeContiguous>true</mergeContiguous>
@@ -24,7 +24,7 @@
       <fieldname>timestamp</fieldname>
       <mode>ALWAYS</mode>
       <highlight>false</highlight>
-      <fragmentSize>20</fragmentSize>
+      <fragmentSize>50</fragmentSize>
       <maxFragNumber>50</maxFragNumber>
       <fragmenterName>SIMPLE</fragmenterName>
       <mergeContiguous>true</mergeContiguous>
@@ -33,7 +33,7 @@
       <fieldname>userid</fieldname>
       <mode>ALWAYS</mode>
       <highlight>false</highlight>
-      <fragmentSize>20</fragmentSize>
+      <fragmentSize>50</fragmentSize>
       <maxFragNumber>50</maxFragNumber>
       <fragmenterName>SIMPLE</fragmenterName>
       <mergeContiguous>true</mergeContiguous>
@@ -42,7 +42,7 @@
       <fieldname>username</fieldname>
       <mode>ALWAYS</mode>
       <highlight>false</highlight>
-      <fragmentSize>20</fragmentSize>
+      <fragmentSize>50</fragmentSize>
       <maxFragNumber>50</maxFragNumber>
       <fragmenterName>SIMPLE</fragmenterName>
       <mergeContiguous>true</mergeContiguous>

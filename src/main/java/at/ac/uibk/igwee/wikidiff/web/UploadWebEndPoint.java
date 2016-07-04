@@ -85,6 +85,33 @@ public class UploadWebEndPoint {
                 .body(new FileContainer(createPageTitleFilename(languageCode, pageTitle), bytes));
     }
 
+    @RequestMapping(value = "/downloadArchiveFromWikipedia", method = RequestMethod.POST)
+    public ResponseEntity<FileContainer> downloadArchiveFromWikipedia(@RequestParam("languageCode") String lc,
+                                                        @RequestParam("pageTitle") String pt,
+                                                        @RequestParam("archiveCount") int archiveCount,
+                                                        @RequestParam("autoIngest") boolean autoIngest) {
+        if (lc==null || lc.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new FileContainer("Language Code not set.", null));
+        }
+        if (pt==null || pt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new FileContainer("Page Title not set.", null));
+        }
+        String languageCode = lc.toLowerCase().trim().substring(0, 2);
+        String pageTitle = pt.trim();
+        byte[] bytes = null;
+        try {
+            bytes = mainController.loadArchiveFromWikipedia(languageCode, pageTitle, autoIngest, archiveCount);
+        } catch (Exception e) {
+            LOGGER.error("Cannot load from Wikipedia.", e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new FileContainer("Cannot load from Wikipedia: " + e.getMessage(), null));
+        }
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new FileContainer(createPageTitleFilename(languageCode, pageTitle), bytes));
+    }
+
     /**
      * Creates the title of a WikiPedia download. Using:
      * "wiki_{languageCode}_{pageTitle}_yyyyMMdd-HHmmss.xml"

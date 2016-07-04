@@ -57,7 +57,7 @@ myApp.service("revisionService", ["$http", "$rootScope", "loadingService",
         
         this.fetchRevisions = function() {
             if (revisionList.length!==0) return;
-            var url = useMock ? "http://localhost:1414/list" : "list";
+            var url = useMock ? "http://localhost:1415/list" : "list";
             loadingService.setLoading(true);
             $http({
                 url: url,
@@ -152,7 +152,7 @@ myApp.controller("diffController", ["revisionService", "$scope", "$http", "$anch
             if (rv1==="") rv1 = revisionService.getRevisionList()[0].id;
             var rv2 = $scope.revId2;
             if (rv2==="") rv2 = revisionService.getRevisionList()[1].id;
-            var url = useMock ? "http://localhost:1414/diffHtml/" + rv1 + "/" + rv2 :
+            var url = useMock ? "http://localhost:1415/diffHtml/" + rv1 + "/" + rv2 :
                 "diff/" + rv1 + "/" + rv2 ;
             $scope.diffUrl = url;
         };
@@ -162,7 +162,7 @@ myApp.controller("diffController", ["revisionService", "$scope", "$http", "$anch
             if (rv1==="") rv1 = revisionService.getRevisionList()[0].id;
             var rv2 = $scope.revId2;
             if (rv2==="") rv2 = revisionService.getRevisionList()[1].id;
-            var url = useMock ? "http://localhost:1414/diff/" + rv1 + "/" + rv2 :
+            var url = useMock ? "http://localhost:1415/diff/" + rv1 + "/" + rv2 :
             "diff/" + rv1 + "/" + rv2 ;
             $http({
                 url: url,
@@ -281,7 +281,7 @@ myApp.controller("viewRevisionController", ["$scope", "revisionService", "$state
             $scope.revId = id;
             $anchorScroll('a' + id);
             loadingService.setLoading(true);
-            var url = useMock ? "http://localhost:1414/view/" + id : "view/" + id;
+            var url = useMock ? "http://localhost:1415/view/" + id : "view/" + id;
 
             $http({
                 method: 'GET',
@@ -375,7 +375,7 @@ myApp.controller("userRevisionController", ["$scope", "revisionService", "$state
         $scope.showOriginal = true;
         $scope.showDiff = true;
         this.setContributorId = function(id) {
-            var url = useMock ? "http://localhost:1414/user/" + id : "user/" + id;
+            var url = useMock ? "http://localhost:1415/user/" + id : "user/" + id;
             $scope.userRevisionUrl = url;
             $anchorScroll('a' + id);
             loadingService.setLoading(true);
@@ -468,7 +468,8 @@ myApp.controller('uploadController', ['$scope', 'Upload', 'loadingService', 'rev
         $scope.languageCode = "en";
         $scope.languageCodes = ["en", "de", "es", "fr", "it", "ja", "ru", "sv"];
         $scope.pageTitle = "";
-        $scope.autoIngest = false;
+        $scope.autoIngest = true;
+        $scope.archiveCount = 0;
         // upload later on form submit or something similar
         $scope.submit = function() {
             if ($scope.file) {
@@ -478,7 +479,7 @@ myApp.controller('uploadController', ['$scope', 'Upload', 'loadingService', 'rev
 
         // upload on file select or drop
         $scope.upload = function (file) {
-            var url = useMock ? "http://localhost:1414/upload" : "upload";
+            var url = useMock ? "http://localhost:1415/upload" : "upload";
             loadingService.setLoading(true);
             Upload.upload({
                 url: url,
@@ -491,6 +492,7 @@ myApp.controller('uploadController', ['$scope', 'Upload', 'loadingService', 'rev
             }, function (resp) {
                 alert("Error while uploading.");
                 loadingService.setLoading(false);
+                revisionService.clearRevisionList();
                 console.log('Error status: ' + resp.status);
             });
         };
@@ -500,7 +502,7 @@ myApp.controller('uploadController', ['$scope', 'Upload', 'loadingService', 'rev
             loadingService.setLoading(true);
             $http({
                 method: "POST",
-                url: useMock ? "http://localhost:1414/downloadFromWikipedia" : "downloadFromWikipedia",
+                url: useMock ? "http://localhost:1415/downloadFromWikipedia" : "downloadFromWikipedia",
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 data: $.param({
                     languageCode: $scope.languageCode,
@@ -515,7 +517,37 @@ myApp.controller('uploadController', ['$scope', 'Upload', 'loadingService', 'rev
                 saveAs(blob, resp.data.filename);
             }, function(resp) {
                 loadingService.setLoading(false);
-                alert("Cannot download from Wikipedia: " + resp.data.filename);
+                alert("Cannot download from Wikipedia: " + $scope.pageTitle);
+                revisionService.clearRevisionList();
+                console.log(resp);
+            });
+        };
+
+        this.downloadArchiveFromWikipedia = function() {
+            console.log("languageCode: " + $scope.languageCode +
+                ", pageTitle: " + $scope.pageTitle + ", autoIngest: " + $scope.autoIngest +
+                ", archiveCount: " + $scope.archiveCount);
+            loadingService.setLoading(true);
+            $http({
+                method: "POST",
+                url: useMock ? "http://localhost:1415/downloadArchiveFromWikipedia" : "downloadArchiveFromWikipedia",
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                data: $.param({
+                    languageCode: $scope.languageCode,
+                    pageTitle:    $scope.pageTitle,
+                    autoIngest:   $scope.autoIngest,
+                    archiveCount: $scope.archiveCount
+                })
+            }).then(function(resp) {
+                loadingService.setLoading(false);
+                revisionService.clearRevisionList();
+                var bytes = atob(resp.data.contents);
+                var blob = new Blob([bytes], {type: "text/xml;encoding=UTF-8"});
+                saveAs(blob, resp.data.filename);
+            }, function(resp) {
+                loadingService.setLoading(false);
+                alert("Cannot download including Archive from Wikipedia: " + $scope.pageTitle);
+                revisionService.clearRevisionList();
                 console.log(resp);
             });
         };
@@ -551,16 +583,26 @@ myApp.controller("searchController", ["loadingService", "$scope", "$http", "$anc
         $scope.pageNumber = 0;
         $scope.searchResult = {};
         $scope.pageNumberNext = 0;
+        $scope.sortField = {name:"", ascending:true};
         var self = this;
         this.doSearch = function() {
             loadingService.setLoading(true);
             console.log("Search Term: " + $scope.searchTerm);
-            var url = useMock ? "http://localhost:1414/search" : "search";
+            var url = useMock ? "http://localhost:1415/search" : "search";
             //
-            $http({
-                url: url,
-                method: "POST",
-                data: {
+            var data = $scope.sortField.name.length > 0 ?
+            {
+                pageNumber: $scope.pageNumber,
+                pageSize: $scope.pageSize,
+                querySettings: [
+                    {
+                        fieldname: "revision",
+                        queryString: $scope.searchTerm,
+                        queryType: 2 // QueryParser
+                    }
+                ],
+                sortSettings: [{fieldname: $scope.sortField.name, ascending: $scope.sortField.ascending}]
+            } : {
                     pageNumber: $scope.pageNumber,
                     pageSize: $scope.pageSize,
                     querySettings: [
@@ -570,7 +612,12 @@ myApp.controller("searchController", ["loadingService", "$scope", "$http", "$anc
                             queryType: 2 // QueryParser
                         }
                     ]
-                }
+                };
+
+            $http({
+                url: url,
+                method: "POST",
+                data: data
             }).then(function(resp) {
                 console.log(resp.data);
                 $scope.searchResult = resp.data;
@@ -634,6 +681,18 @@ myApp.controller("searchController", ["loadingService", "$scope", "$http", "$anc
             $scope.pageNumber = $scope.pageNumberNext;
             self.doSearch();
         }
+        this.setSortField = function(fieldname) {
+
+            if (fieldname==="none") {
+                $scope.sortField.name="";
+            } else if ($scope.sortField.name===fieldname) {
+                $scope.sortField.ascending = !$scope.sortField.ascending;
+            } else {
+                $scope.sortField.name = fieldname;
+                $scope.sortField.ascending = true;
+            }
+            self.doSearch();
+        };
     }
 ]);
 

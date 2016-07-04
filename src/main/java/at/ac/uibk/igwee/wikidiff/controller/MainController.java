@@ -464,6 +464,19 @@ public class MainController {
         return content;
     }
 
+    private byte[] loadFromArchiveWikipedia(String lc, String pt, int pageCount) throws WikiDiffException {
+        LOGGER.info("Loading from Wikipedia Talk Page including archives.");
+        return wikiDownloadService.getCombinedRevisionFile(lc, pt, true, pageCount);
+    }
+
+    public byte[] loadArchiveFromWikipedia(String lc, String pageTitle, boolean autoIngest, int archiveCount) throws WikiDiffException {
+        byte[] content = loadFromArchiveWikipedia(lc, pageTitle, archiveCount);
+        if (autoIngest) {
+            setXmlFile(content);
+        }
+        return content;
+    }
+
     private InputStream transform(String xsltLocation, Map<String,Object> params) throws WikiDiffException {
         if (xmlIS==null) {
             if (xmlFile==null || !xmlFile.exists() || !xmlFile.canRead()) {

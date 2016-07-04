@@ -31,13 +31,14 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <td>Nr.</td>
-                                <td><a id="searchResultBegin"></a> Revision</td>
-                                <td>Snippet</td>
+                                <td class="col-lg-1"><a ng-click="searchCtrl.setSortField('none');">Nr.</a></td>
+                                <td class="col-lg-2"><a id="searchResultBegin"></a> <a ng-click="searchCtrl.setSortField('revision');">Revision</a></td>
+                                <td class="col-lg-7"><a ng-click="searchCtrl.setSortField('username')">Username</a></td>
+                                <td class="col-lg-2"><a ng-click="searchCtrl.setSortField('timestamp')">Timestamp</a></td>
                             </tr>
                             </thead>
                             <tbody ng-show="searchResult.resultDocuments">
-                            <tr ng-repeat="rd in searchResult.resultDocuments">
+                            <tr ng-repeat="rd in searchResult.resultDocuments track by $index">
                                 <td>
                                     <span ng-bind="searchResult.searchRequest.pageNumber * searchResult.searchRequest.pageSize + 1 + $index"></span>
                                 </td>
@@ -45,15 +46,17 @@
                                     <a ui-sref="viewSingle({revId:rd.id})">{{rd.id}}</a>
                                 </td>
                                 <td>
-                                    <p><span class="bold">{{searchCtrl.getTimestamp(rd)}}</span> by
-                                        <span class="bold">{{searchCtrl.getUsername(rd)}}</span></p>
+                                    <p><span class="bold">{{searchCtrl.getUsername(rd)}}</span></p>
                                     <p>Comment: <span ng-bind-html="searchCtrl.getComment(rd)"></span></p>
                                     <p>Revision</p>
                                     <ul>
-                                        <li ng-repeat="item in searchCtrl.getRevisions(rd)">
+                                        <li ng-repeat="item in searchCtrl.getRevisions(rd) track by $index">
                                             <span ng-bind-html="item"></span>
                                         </li>
                                     </ul>
+                                </td>
+                                <td>
+                                    <span class="bold">{{searchCtrl.getTimestamp(rd)}}</span> by
                                 </td>
                             </tr>
                             </tbody>

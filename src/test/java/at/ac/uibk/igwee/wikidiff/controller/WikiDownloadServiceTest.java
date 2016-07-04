@@ -4,6 +4,8 @@ import at.ac.uibk.igwee.wikidiff.IgweeWikidiffWebappApplication;
 import at.ac.uibk.igwee.wikidiff.WikiDiffException;
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +22,18 @@ import java.io.File;
 public class WikiDownloadServiceTest {
 
     private static final File TEST_FILE = new File("./src/test/resources/wiki.xml");
+    private static final boolean RUN_TEST = false;
 
     @Autowired
     private WikiDownloadService service;
 
     @Autowired
     private MainController mainController;
+
+    @BeforeClass
+    public static void reallyRun() {
+        Assume.assumeTrue(RUN_TEST);
+    }
 
     @Test
     public void downloadPage() throws Exception {
@@ -65,6 +73,15 @@ public class WikiDownloadServiceTest {
 
         byte[] content = service.getRevisionFile(languageCode, pageTitle);
         mainController.setXmlFile(content);
+    }
+
+    @Test
+    public void getPageWithArchive() throws Exception {
+        String languageCode = "en";
+        String pageTitle = "Talk:Psychokinesis";
+        int count = 11;
+        byte[] all = service.getCombinedRevisionFile(languageCode, pageTitle, true, count);
+        mainController.setXmlFile(all);
     }
 
 
